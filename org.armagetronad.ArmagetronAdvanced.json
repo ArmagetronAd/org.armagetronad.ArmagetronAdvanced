@@ -8,12 +8,9 @@
         "--share=ipc",
         "--socket=x11",
         "--share=network",
-        "--socket=pulseaudio",
-        "--filesystem=~/.org.armagetronad.ArmagetronAdvanced/var:create",
-        "--filesystem=~/.org.armagetronad.ArmagetronAdvanced/resource/automatic:create",
-        "--filesystem=~/.org.armagetronad.ArmagetronAdvanced:ro"
+        "--socket=pulseaudio"
     ],
-    "command": "org.armagetronad.ArmagetronAdvanced",
+    "command": "run.sh",
     "cleanup": [
         "/include",
         "/lib/pkgconfig",
@@ -53,9 +50,19 @@
                     "commands": [
                         "autoreconf -vfi"
                     ]
+                },
+                {
+                    "type": "script",
+                    "dest-filename": "run.sh",
+                    "commands": [
+                        "mkdir -p \"${XDG_CONFIG_HOME}/game\"",
+                        "test -r \"${XDG_CONFIG_HOME}/game/README.txt\" || echo > \"${XDG_CONFIG_HOME}/game/README.txt\" \"Custom configuration files for Armagetron Advanced go here.\"",
+                        "org.armagetronad.ArmagetronAdvanced --userdatadir \"${XDG_DATA_HOME}/game\" --userconfigdir \"${XDG_CONFIG_HOME}/game\" --autoresourcedir \"${XDG_CACHE_HOME}/resource\" $*"
+                    ]
                 }
             ],
             "post-install": [
+                "install -Dm755 run.sh /app/bin/run.sh",
                 "sed -i /app/share/metainfo/*.appdata.xml -e 's,org.armagetronad.org.armagetronad,org.armagetronad,' -e 's,.desktop</id>,</id>,' -e 's,<!-- <launchable,<launchable,' -e 's,</launchable> -->,</launchable>,'",
                 "install -Dm644 /app/share/metainfo/*.appdata.xml /app/share/appdata/org.armagetronad.ArmagetronAdvanced.appdata.xml",
                 "desktop-file-edit --remove-key=Path /app/share/org.armagetronad.ArmagetronAdvanced/desktop/*.desktop",
