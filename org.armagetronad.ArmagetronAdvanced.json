@@ -1,6 +1,7 @@
 {
     "app-id": "org.armagetronad.ArmagetronAdvanced",
     "runtime": "org.freedesktop.Platform",
+    "branch": "legacy_0.2.9",
     "runtime-version": "20.08",
     "sdk": "org.freedesktop.Sdk",
     "finish-args": [
@@ -10,7 +11,7 @@
         "--share=network",
         "--socket=pulseaudio"
     ],
-    "command": "org.armagetronad.ArmagetronAdvanced",
+    "command": "ArmagetronAdvanced",
     "cleanup": [
         "/include",
         "/lib/pkgconfig",
@@ -24,44 +25,34 @@
         "shared-modules/SDL/SDL_image-1.2.12.json",
         {
             "name": "armagetronad",
-            "rm-configure": true,
             "config-opts": [
+                "--disable-etc",
                 "--disable-games",
                 "--disable-uninstall",
-                "progname=org.armagetronad.ArmagetronAdvanced",
+                "progname=ArmagetronAdvanced",
+                "progtitle=Armagetron Alpha",
                 "CXXFLAGS=-DUSER_DATA_DIR='\"$${XDG_DATA_HOME}/game\"' -DUSER_CONFIG_DIR='\"$${XDG_CONFIG_HOME}/game\"' -DAUTORESOURCE_DIR='\"$${XDG_CACHE_HOME}/resource\"'"
             ],
             "sources": [
                 {
-                    "type": "archive",
-                    "url": "https://launchpad.net/armagetronad/0.2.9/0.2.9.1.0/+download/armagetronad-0.2.9.1.0.tbz",
-                    "sha256": "59b6c7c01ce3f8cca5437e33f974a637529541a11aa4f52c1a5c17499e26f6a1"
-                },
-                {
-                    "type": "patch",
-                    "path": "armagetronad-libpng-config.patch"
-                },
-                {
-                    "type": "patch",
-                    "path": "armagetronad-appdata.patch"
+                    "type": "git",
+                    "url": "/home/manuel/Tron/Develop/legacy_0.2.9/source",
+                    "branch": "legacy_0.2.9_flatpak_fixes"
                 },
                 {
                     "type": "script",
                     "dest-filename": "autogen.sh",
                     "commands": [
-                        "autoreconf -vfi"
+                        "sed -i batch/sysinstall.in -e 's,install_link ,install ,g'",
+                        "./bootstrap.sh"
                     ]
                 }
             ],
             "post-install": [
-                "sed -i /app/share/metainfo/*.appdata.xml -e 's,org.armagetronad.org.armagetronad,org.armagetronad,' -e 's,.desktop</id>,</id>,' -e 's,<!-- <launchable,<launchable,' -e 's,</launchable> -->,</launchable>,'",
-                "install -Dm644 /app/share/metainfo/*.appdata.xml /app/share/appdata/org.armagetronad.ArmagetronAdvanced.appdata.xml",
-                "desktop-file-edit --remove-key=Path /app/share/org.armagetronad.ArmagetronAdvanced/desktop/*.desktop",
-                "desktop-file-edit --remove-key=Terminal /app/share/org.armagetronad.ArmagetronAdvanced/desktop/*.desktop",
-                "install -Dm644 /app/share/org.armagetronad.ArmagetronAdvanced/desktop/*.desktop /app/share/applications/org.armagetronad.ArmagetronAdvanced.desktop",
-                "install -Dm644 /app/share/org.armagetronad.ArmagetronAdvanced/desktop/icons/16x16/org.armagetronad.ArmagetronAdvanced.png /app/share/icons/hicolor/16x16/apps/org.armagetronad.ArmagetronAdvanced.png",
-                "install -Dm644 /app/share/org.armagetronad.ArmagetronAdvanced/desktop/icons/32x32/org.armagetronad.ArmagetronAdvanced.png /app/share/icons/hicolor/32x32/apps/org.armagetronad.ArmagetronAdvanced.png",
-                "install -Dm644 /app/share/org.armagetronad.ArmagetronAdvanced/desktop/icons/48x48/org.armagetronad.ArmagetronAdvanced.png /app/share/icons/hicolor/48x48/apps/org.armagetronad.ArmagetronAdvanced.png"
+                "sed -i /app/share/appdata/*.xml -e 's,x-flatpak-,,g' -e 's,\\.desktop</id>,</id>,'",
+                "desktop-file-edit --remove-key=Path /app/share/applications/*.desktop",
+                "desktop-file-edit --remove-key=Terminal /app/share/applications/*.desktop",
+                "rm -rf /app/share/ArmagetronAdvanced/desktop"
             ]
         }
     ]
