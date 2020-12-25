@@ -38,14 +38,16 @@
                 {
                     "type": "git",
                     "url": "https://gitlab.com/armagetronad/armagetronad.git",
+                    "disable-shallow-clone": true,
                     "branch": "legacy_0.2.9"
                 },
                 {
                     "type": "script",
                     "dest-filename": "autogen.sh",
                     "commands": [
-                        "sed -i batch/sysinstall.in -e 's,install_link ,install ,g'",
-                        "./bootstrap.sh"
+                        "./bootstrap.sh",
+                        "rm batch/make/version",
+                        "sed -i batch/sysinstall.in -e 's,install_link ,install ,g'"
                     ]
                 }
             ],
