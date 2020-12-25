@@ -37,8 +37,8 @@
             "sources": [
                 {
                     "type": "git",
-                    "url": "/home/manuel/Tron/Develop/legacy_0.2.9/source",
-                    "branch": "legacy_0.2.9_flatpak_fixes"
+                    "url": "https://gitlab.com/armagetronad/armagetronad.git",
+                    "branch": "legacy_0.2.9"
                 },
                 {
                     "type": "script",
