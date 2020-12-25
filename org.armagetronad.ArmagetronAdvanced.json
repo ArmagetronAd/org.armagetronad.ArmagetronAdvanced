@@ -17,6 +17,7 @@
         "/lib/pkgconfig",
         "/share/aclocal",
         "/share/man",
+        "/app/share/ArmagetronAdvanced/desktop",
         "*.la", "*.a"
     ],
     "modules": [
@@ -51,8 +52,7 @@
             "post-install": [
                 "sed -i /app/share/appdata/*.xml -e 's,x-flatpak-,,g' -e 's,\\.desktop</id>,</id>,'",
                 "desktop-file-edit --remove-key=Path /app/share/applications/*.desktop",
-                "desktop-file-edit --remove-key=Terminal /app/share/applications/*.desktop",
-                "rm -rf /app/share/ArmagetronAdvanced/desktop"
+                "desktop-file-edit --remove-key=Terminal /app/share/applications/*.desktop"
             ]
         }
     ]
