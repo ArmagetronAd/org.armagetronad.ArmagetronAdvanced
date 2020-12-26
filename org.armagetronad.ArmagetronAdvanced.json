@@ -37,8 +37,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://sourceforge.net/projects/armagetronad/files/alpha/2020/0.2.9.2_alpha_z2417/armagetronad-alpha-0.2.9.2_alpha_z2417.tbz",
-                    "sha256": "3a543c84bd47254592c7a21379f3db1e297f8f8981fa276e5fcfea8dbc4ff990"
+                    "url": "https://sourceforge.net/projects/armagetronad/files/alpha/2020/0.2.9.2_alpha_z2422/armagetronad-alpha-0.2.9.2_alpha_z2422.tbz",
+                    "sha256": "15dc9c8647fd1e35930f4d1e5d12774ee164a8334fe02f2bfaaed526ad0a997e"
                 },
                 {
                     "type": "shell",
