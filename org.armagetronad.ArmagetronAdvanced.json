@@ -1,6 +1,6 @@
 {
     "app-id": "org.armagetronad.ArmagetronAdvanced",
-    "branch": "alpha",
+    "default-branch": "alpha",
     "runtime": "org.freedesktop.Platform",
     "runtime-version": "20.08",
     "sdk": "org.freedesktop.Sdk",
@@ -36,19 +36,16 @@
             ],
             "sources": [
                 {
-                    "type": "git",
-                    "url": "https://gitlab.com/armagetronad/armagetronad.git",
-                    "disable-shallow-clone": true,
-                    "branch": "legacy_0.2.9"
+                    "type": "archive",
+                    "url": "https://sourceforge.net/projects/armagetronad/files/alpha/2020/0.2.9.2_alpha_z2417/armagetronad-alpha-0.2.9.2_alpha_z2417.tbz",
+                    "sha256": "3a543c84bd47254592c7a21379f3db1e297f8f8981fa276e5fcfea8dbc4ff990"
                 },
                 {
-                    "type": "script",
-                    "dest-filename": "autogen.sh",
+                    "type": "shell",
                     "commands": [
-                        "./bootstrap.sh",
-                        "rm batch/make/version",
+                        "test -r configure || ./bootstrap.sh",
                         "sed -i batch/sysinstall.in -e 's,install_link ,install ,g'"
-                    ]
+                     ]
                 }
             ],
             "post-install": [
