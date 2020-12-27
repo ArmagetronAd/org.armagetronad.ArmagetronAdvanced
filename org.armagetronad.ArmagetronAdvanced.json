@@ -1,6 +1,6 @@
 {
     "app-id": "org.armagetronad.ArmagetronAdvanced",
-    "default-branch": "alpha",
+    "branch": "alpha",
     "runtime": "org.freedesktop.Platform",
     "runtime-version": "20.08",
     "sdk": "org.freedesktop.Sdk",
