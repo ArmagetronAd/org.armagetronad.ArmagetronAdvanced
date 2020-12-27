@@ -1,0 +1,30 @@
+{
+    "name": "protobuf",
+    "rm-configure": true,
+    "config-opts": ["--disable-static"],
+    "cleanup": [
+        "/bin",
+        "/share/man",
+        "/share/aclocal",
+        "/include",
+        "/lib/pkgconfig",
+        "/lib/*.la",
+        "/lib/*.a"
+    ],
+    "sources": [
+        {
+            "type": "archive",
+            "url": "https://github.com/protocolbuffers/protobuf/releases/download/v3.14.0/protobuf-cpp-3.14.0.tar.gz",
+            "sha256": "50ec5a07c0c55d4ec536dd49021f2e194a26bfdbc531d03d1e9d4d3e27175659"
+        },
+        {
+            "type": "script",
+            "dest-filename": "autogen2.sh",
+            "commands": [
+                "aclocal",
+                "libtoolize",
+                "autoconf"
+            ]
+        }
+    ]
+}

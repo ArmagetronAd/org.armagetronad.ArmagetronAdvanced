@@ -1,0 +1,30 @@
+{
+    "name": "boost",
+    "buildsystem": "simple",
+    "cleanup": [
+        "/bin",
+        "/share/man",
+        "/share/aclocal",
+        "/include",
+        "/lib/pkgconfig",
+        "/lib/*.la",
+        "/lib/*.a"
+    ],
+    "sources": [
+        {
+            "type": "archive",
+            "url": "https://dl.bintray.com/boostorg/release/1.75.0/source/boost_1_75_0.tar.bz2",
+            "sha256": "953db31e016db7bb207f11432bef7df100516eeb746843fa0486a222e3fd49cb"
+        }
+    ],
+    "build-commands": [
+        "#./bootstrap.sh --help",
+        "#./bootstrap.sh --show-libraries",
+        "./bootstrap.sh --with-libraries=thread --prefix=${FLATPAK_DEST}",
+        "#./b2",
+        "#./b2 headers",
+        "#./b2 install",
+        "./b2 headers install",
+        ""
+    ]
+}

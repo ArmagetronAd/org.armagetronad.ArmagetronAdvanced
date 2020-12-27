@@ -1,6 +1,6 @@
 {
     "app-id": "org.armagetronad.ArmagetronAdvanced",
-    "branch": "alpha",
+    "branch": "experimental",
     "runtime": "org.freedesktop.Platform",
     "runtime-version": "20.08",
     "sdk": "org.freedesktop.Sdk",
@@ -18,12 +18,17 @@
         "/share/aclocal",
         "/share/man",
         "/app/share/ArmagetronAdvanced/desktop",
+        "/app/bin/protoc",
+        "/app/lib/debug",
+        "/lib/debug",
         "*.la", "*.a"
     ],
     "modules": [
+        "shared-modules/glew/glew.json",
         "shared-modules/glu/glu-9.json",
-        "shared-modules/SDL/SDL-1.2.15.json",
-        "shared-modules/SDL/SDL_image-1.2.12.json",
+        "boost.json",
+        "protobuf.json",
+        "ftgl.json",
         {
             "name": "armagetronad",
             "config-opts": [
@@ -31,27 +36,32 @@
                 "--disable-games",
                 "--disable-uninstall",
                 "progname=ArmagetronAdvanced",
-                "progtitle=Armagetron Alpha",
-                "CXXFLAGS=-DUSER_DATA_DIR='\"$${XDG_DATA_HOME}/ArmagetronAdvanced\"' -DUSER_CONFIG_DIR='\"$${XDG_CONFIG_HOME}/ArmagetronAdvanced\"' -DAUTORESOURCE_DIR='\"$${XDG_CACHE_HOME}/ArmagetronAdvanced/resource\"'"
+                "progtitle=Armagetron Experimental",
+                "ARMAGETRONAD_FAKERELEASE=false"
             ],
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://sourceforge.net/projects/armagetronad/files/alpha/2020/0.2.9.2_alpha_z2422/armagetronad-alpha-0.2.9.2_alpha_z2422.tbz",
-                    "sha256": "15dc9c8647fd1e35930f4d1e5d12774ee164a8334fe02f2bfaaed526ad0a997e"
+                    "url": "https://sourceforge.net/projects/armagetronad/files/snapshots/2020/0.4.0_alpha_z4910/armagetronad-experimental-0.4.0_alpha_z4910.tbz",
+                    "sha256": "a4925c775da7624eeb1ff9c248ac1ccf90f591286c65132d07d1d54c8ce0b9f2"
                 },
                 {
                     "type": "shell",
                     "commands": [
                         "test -r configure || ./bootstrap.sh",
-                        "sed -i batch/sysinstall.in -e 's,install_link ,install ,g'"
+                        "sed -i batch/sysinstall.in -e 's,install_link ,install ,g'",
+                        "sed -i batch/sysinstall.in -e 's,if test -z \"${DESTDIR}\"; then,if false; then,'",
+                        ""
                      ]
                 }
             ],
             "post-install": [
-                "sed -i /app/share/appdata/*.xml -e 's,x-flatpak-,,g' -e 's,\\.desktop</id>,</id>,'",
-                "desktop-file-edit --remove-key=Path /app/share/applications/*.desktop",
-                "desktop-file-edit --remove-key=Terminal /app/share/applications/*.desktop"
+                "echo FLATPAK_DEST=${FLATPAK_DEST}",
+                "sed -i ${FLATPAK_DEST}/share/appdata/*.xml -e 's,x-flatpak-,,g' -e 's,\\.desktop</id>,</id>,'",
+                "#rm -f ${FLATPAK_DEST}/share/applications/*-handler.desktop",
+                "desktop-file-edit --remove-key=Path ${FLATPAK_DEST}/share/applications/org.armagetronad.ArmagetronAdvanced.desktop",
+                "desktop-file-edit --remove-key=Terminal ${FLATPAK_DEST}/share/applications/org.armagetronad.ArmagetronAdvanced.desktop",
+                ""
             ]
         }
     ]
