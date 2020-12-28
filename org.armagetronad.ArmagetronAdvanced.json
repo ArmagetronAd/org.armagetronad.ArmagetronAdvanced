@@ -17,10 +17,11 @@
         "/lib/pkgconfig",
         "/share/aclocal",
         "/share/man",
-        "/app/share/ArmagetronAdvanced/desktop",
-        "/app/bin/protoc",
-        "/app/lib/debug",
-        "/lib/debug",
+        "/share/doc",
+        "/share/ArmagetronAdvanced/desktop",
+        "/bin/protoc",
+        "/lib/cmake",
+        "/lib/libprotoc*",
         "*.la", "*.a"
     ],
     "modules": [
